@@ -2,12 +2,20 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { withSingleUrlLoader } from './lib/datasource.js';
-import {Dialog} from '@material-ui/core';
+import { GeneralSettings, withSettingsDialog, withWidget } from './lib/widgetbase.js'
+
 
 const withTestJson = withSingleUrlLoader;//('https://reqres.in/api/unknown');
 
 const JsonText = withTestJson(
   props => <p>{JSON.stringify(props.data)}</p>
+);
+
+const SettingDialog = withSettingsDialog(GeneralSettings);
+
+const DummyWidget = props => (<div>{JSON.stringify(props)}</div>);
+const TestWidget = withWidget(
+  DummyWidget, GeneralSettings
 );
 
 class App extends Component {
@@ -27,13 +35,13 @@ class App extends Component {
           >
             Learn React
           </a>
-          <JsonText url='https://reqres.in/api/unknown'/>
-
-          <Dialog />
-
         </header>
+        <SettingDialog isDialogOpen={false} 
+        onSaveSettings={settings => console.log(settings)}/>
 
-        
+        <TestWidget />
+
+
       </div>
     );
   }
