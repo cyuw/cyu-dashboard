@@ -132,6 +132,7 @@ const withWidget = (WidgetComponent, SettingsComponent) => class extends React.C
         const {title, ...otherSettings} = this.state.settings;
         return (
             <Card>
+                {this.props.isEditable && SettingsComponent ? 
                 <div>
                     <this.SettingsDialog 
                     initSettings={this.state.settings}
@@ -140,6 +141,9 @@ const withWidget = (WidgetComponent, SettingsComponent) => class extends React.C
                     onSaveSettings={settings => this.setState({settings: settings})}
                     />
                 </div>
+                : null}
+
+                {this.props.isEditable ? 
                 <CardActions>
                     <IconButton aria-label="Edit Widget" onClick={(event) => this.setState({isSettingDialogOpen: true})}>
                         <EditIcon />
@@ -148,7 +152,10 @@ const withWidget = (WidgetComponent, SettingsComponent) => class extends React.C
                         <CloseIcon />
                     </IconButton>
                 </CardActions>
+                : null}
+
                 <CardHeader title={title} component="div"></CardHeader>
+
                 <CardContent>
                     <WidgetComponent {...this.props} {...otherSettings} />
                 </CardContent>
