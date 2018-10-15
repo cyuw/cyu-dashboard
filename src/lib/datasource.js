@@ -3,32 +3,39 @@ import axios from 'axios';
 import { branch, renderComponent, compose } from 'recompose';
 import { PacmanLoader } from 'react-spinners';
 
-const withSingleUrl = Component => class extends React.Component {
+const withSingleUrl = Component =>
+  class extends React.Component {
     constructor(props) {
-        super(props);
-        this.state = {data: [], isLoading: true, error: null};
+      super(props);
+      this.state = { data: [], isLoading: true, error: null };
     }
 
     componentDidMount() {
-        const configOrUrl = typeof this.props.url === 'function' ? this.props.url(this.props): this.props.url;
+      const configOrUrl =
+        typeof this.props.url === 'function'
+          ? this.props.url(this.props)
+          : this.props.url;
 
-        axios(configOrUrl).then(
-            response => this.setState({data: response.data, isLoading: false})
-        ).catch(
-            error => this.setState({error, isLoading: false})
+      axios(configOrUrl)
+        .then(response =>
+          this.setState({ data: response.data, isLoading: false })
         )
+        .catch(error => this.setState({ error, isLoading: false }));
     }
 
     render() {
-        return <Component {...this.props} {...this.state} />
+      return <Component {...this.props} {...this.state} />;
     }
-};
+  };
 
 const withSpinner = branch(
-    props => props.isLoading,
-    renderComponent(PacmanLoader)
-  );
+  props => props.isLoading,
+  renderComponent(PacmanLoader)
+);
 
-const withSingleUrlLoader = compose(withSingleUrl, withSpinner);
+const withSingleUrlLoader = compose(
+  withSingleUrl,
+  withSpinner
+);
 
-export {withSingleUrlLoader, withSingleUrl};
+export { withSingleUrlLoader, withSingleUrl };

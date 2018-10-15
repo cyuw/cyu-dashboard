@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import './App.css';
 import { withSingleUrlLoader } from './lib/datasource.js';
 // import { GeneralSettings, withSettingsDialog, withWidget } from './lib/widgetbase.js'
-import TableWidget from './lib/tablewidget'
+import TableWidget from './lib/tablewidget';
 
-const withTestJson = withSingleUrlLoader;//('https://reqres.in/api/unknown');
+const withTestJson = withSingleUrlLoader; //('https://reqres.in/api/unknown');
 
 // const JsonText = withTestJson(
 //   props => <p>{JSON.stringify(props.data)}</p>
