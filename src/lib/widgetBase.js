@@ -15,7 +15,8 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardActions
+  CardActions,
+  createMuiTheme
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
@@ -40,6 +41,19 @@ class GeneralSettings extends React.Component {
           <Tab label="General" />
           <Tab label="Datasource" />
         </Tabs>
+        {this.state.tabIndex === 0 && (
+          <TabContainer>
+            <TextField
+              id="title"
+              label="Title"
+              value={this.props.settings.title}
+              onChange={event =>
+                this.props.onSettingsChange('title', event.target.value)
+              }
+              margin="normal"
+            />
+          </TabContainer>
+        )}
         {this.state.tabIndex === 1 && (
           <TabContainer>
             <FormControl>
@@ -53,19 +67,6 @@ class GeneralSettings extends React.Component {
                 <MenuItem value="python">Python</MenuItem>
               </Select>
             </FormControl>
-          </TabContainer>
-        )}
-        {this.state.tabIndex === 0 && (
-          <TabContainer>
-            <TextField
-              id="title"
-              label="Title"
-              value={this.props.settings.title}
-              onChange={event =>
-                this.props.onSettingsChange('title', event.target.value)
-              }
-              margin="normal"
-            />
           </TabContainer>
         )}
       </div>
@@ -113,7 +114,7 @@ const withSettingsDialog = SettingsComponent =>
         <Dialog
           disableBackdropClick
           disableEscapeKeyDown
-          maxWidth="xs"
+          maxWidth="lg"
           onEntering={this.handleEntering}
           aria-labelledby="settings-dialog-title"
           open={this.props.isDialogOpen}
@@ -194,4 +195,4 @@ const withWidget = (WidgetComponent, SettingsComponent) =>
     }
   };
 
-export { GeneralSettings, withSettingsDialog, withWidget };
+export { GeneralSettings, withSettingsDialog, withWidget, TabContainer };
